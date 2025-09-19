@@ -58,58 +58,49 @@ setMethod(f = show,
 cat("NFL> Importing Raw Data ...")
 
 ## Hilfsfunktion 'import' ----
-import <- function(x) {
-  x %>%
-    separate(filename, into = c("Season", "League", "Residual"), sep = "_", remove = FALSE) %>% 
-    select(-Residual) %>% 
+import <- function(df) {
+  df |>
+    separate(filename, into = c("Season", "League", "Residual"), sep = "_", remove = FALSE) |>
+    select(-Residual) |>
     mutate(Season = as.integer(Season),
            Data = map(.x = filename,
-                      .f = ~ read_csv(file = paste0("games/nfl/", .),
+                      .f = ~ read_csv(file = paste0("games/", .),
                                       skip = 1,
                                       col_names = c("Week", "Day", "Date", "Time", "Winner/tie", "Matchup", "Loser/tie",
                                                     "PreBox", "PtsW", "PtsL", "YdsW", "TOW", "YdsL", "TOL"),
-                                      col_types = cols(Week = col_character(),
-                                                       Date = col_character(),
-                                                       Time = col_character(),
-                                                       PtsW = col_integer(),
-                                                       PtsL = col_integer(),
-                                                       YdsW = col_integer(),
-                                                       TOW = col_integer(),
-                                                       YdsL = col_integer(),
-                                                       TOL = col_integer()),
+                                      col_types = "ccciiiiii", # c .. character, i .. integer
                                       comment = "#",
                                       progress = FALSE,
-                                      lazy = FALSE))) %>% 
-    return()
+                                      lazy = FALSE)))
 }
 
 ## Erstmalige Initialisierung ----
 if(!exists("data_raw")) {
-  data_raw <- tibble(filename = dir("games/nfl/")) %>% 
-    mutate(chk = tools::md5sum(paste0("games/nfl/", filename))) %>%
+  data_raw <- tibble(filename = dir("games/nfl/")) |>
+    mutate(chk = tools::md5sum(paste0("games/nfl/", filename))) |>
     import()
 }
 
 ## Suchen möglicherweise veränderter Dateien anhand 'chk' ----
-tmp <- tibble(filename = dir("games/nfl/")) %>% 
-  mutate(chk = tools::md5sum(paste0("games/nfl/", filename))) %>% 
-  anti_join(data_raw, by = c("filename", "chk")) %>% 
+tmp <- tibble(filename = dir("games/nfl/")) |>
+  mutate(chk = tools::md5sum(paste0("games/nfl/", filename))) |>
+  anti_join(data_raw, by = c("filename", "chk")) |>
   import()
 
 ## Es gibt veränderte Files ----
 if(dim(tmp)[1] > 0) {
   cat(paste0(" reimporting (", dim(tmp)[1], " files) ..."))
-  data_raw <- data_raw %>%
-    filter(!(filename %in% tmp$filename)) %>%  # Entferen veraltete Zeile, ...
-    bind_rows(tmp) %>%                         # füge Neuimport an und ...
-    arrange(filename)                          # stelle Reihenfolge wieder her
+  data_raw <- data_raw |>
+    filter(!(filename %in% tmp$filename)) |> # Entferen veraltete Zeile, ...
+    bind_rows(tmp) |>                        # füge Neuimport an und ...
+    arrange(filename)                        # stelle Reihenfolge wieder her
 }
 
 ## Aufräumen
 rm(import, tmp)
 
 ## Nested Daten erweitern und Anpassungen ----
-raw <- data_raw |> 
+games <- data_raw |> 
   select(Season, League, Data) |> 
   unnest(cols = Data) |> 
   mutate(Year = case_when(substr(Date, 1, 3) %in% c("Jan", "Feb") ~ as.integer(Season + 1),
@@ -131,26 +122,26 @@ raw <- data_raw |>
   select(-Day, -PreBox, -Year)
 
 ## Vertausche, wenn nötig, Winner und Loser (bei händischer preview-Erfassung) ----
-tmp <- raw |> 
+tmp <- games |> 
   filter(PtsL > PtsW) |> 
   mutate(Matchup = "vs") |> 
   rename(c('Winner/tie' = 'Loser/tie', 'Loser/tie' = 'Winner/tie', PtsW = PtsL, PtsL = PtsW, YdsW = YdsL, YdsL = YdsW, TOW = TOL, TOL = TOW))
-if(dim(tmp)[1] != 0)                                                                # Nur wenn es zu Vertauschungen kommt werden ...
-  raw <- anti_join(raw, tmp, by = c("Date", "Time", "Winner/tie" = "Loser/tie")) |> # die entsprechenden Zeilen mit anti_join entfernt ...
-  bind_rows(tmp)                                                                    # und anschließend wieder angefügt
+if(dim(tmp)[1] != 0)                                                                    # Nur wenn es zu Vertauschungen kommt werden ...
+  games <- anti_join(games, tmp, by = c("Date", "Time", "Winner/tie" = "Loser/tie")) |> # die entsprechenden Zeilen mit anti_join entfernt ...
+  bind_rows(tmp)                                                                        # und anschließend wieder angefügt
 
 ## Aufräumen
 rm(tmp)
 
 ## Message Ende
-cat(paste0(" done (", format(dim(raw)[1], big.mark = ","), " lines)\n"))
+cat(paste0(" done (", format(dim(games)[1], big.mark = ","), " lines)\n"))
 
 # RESULTS ----
 ## Message Start
 cat("NFL> Generating Results ...")
 
 ## Darstellung nach Teams ----
-results <- raw %>%
+results <- games %>%
   rename(Winner = 'Winner/tie', Loser = 'Loser/tie') %>% 
   transmute(Season,
             Week,
@@ -169,7 +160,7 @@ results <- raw %>%
             TOA = TOL,
             Opponent = Loser) %>%
   bind_rows(
-    raw %>%
+    games %>%
       rename(Winner = 'Winner/tie', Loser = 'Loser/tie') %>% 
       transmute(Season,
                 Week,
@@ -189,7 +180,7 @@ results <- raw %>%
                 Opponent = Winner)
   )
 
-# rm(raw)
+# rm(games)
 
 ## Add WLT and Franchise to data ----
 results <- results %>%
@@ -220,41 +211,6 @@ cat(paste0(" done (", format(dim(results)[1], big.mark = ","), " lines)\n")) # T
 # STANDINGS ----
 ## Message Start
 cat("NFL> Generating Standings ...")
-
-## Standings ----
-# standings <- results %>%
-#   mutate(Team = map_chr(Team_data, ~.$Team),
-#          he = Season) %>%  # use Variable 'he' to group because Season will be used for nesting 
-#   select(-Franchise, -Time, -Team_data, -Opp_Fr, -Opponent_data) %>%
-#   unique() %>% # unique because of 1943, 1944 two Franchises = one Teams
-#   group_by(he) %>%
-#   complete(Week = 1:max(Week[Week < 30]), nesting(Season, Team),# add bye-weeks (officially 1960:1966 and from 1990 on)
-#            fill = list(Game = "Week_", Result = "bye", PF = 0, PA = 0, YdsF = 0, YdsA = 0, TOF = 0, TOA = 0)) %>% # ^
-#   ungroup() %>% #                                                                                                   |
-#   filter(!((Season < 1960 | Season %in% 1967:1989) & Result == "bye")) %>% #  --------------------------------------┘
-#   mutate(Game = case_when(Game == "Week_" ~ paste0(Game, str_pad(Week, 2, "left", "0")), # add week number in 'Game'
-#                           TRUE ~ Game),
-#          W = (Result == "W") * 1,
-#          L = (Result == "L") * 1,
-#          T = (Result == "T") * 1,
-#          Post = Week > 30) %>%
-#   #  group_by(Season) %>% # add last reg week indicator: for Season 1924 and 1934 GB had two games in the last week; and many others: results %>% group_by(Season, Week, Team) %>% tally() %>% filter(n > 1) %>% View()
-#   #  mutate(LastReg = Week == max(Week[Week < 30])) %>% 
-#   #  ungroup() %>% 
-#   group_by(Season, Team) %>% # add last game indicator: bye weeks have no date and are ignored
-#   mutate(LastReg = Date == max(Date[Week < 30], na.rm = TRUE)) %>% 
-#   ungroup() %>% 
-#   group_by(Season, Team, Post) %>%
-#   mutate_at(.vars = vars(PF:TOA, W:T), .funs = cumsum) %>% 
-#   select(Season, Week, Game, Team, Result:Road, Result, Post, LastReg, PFc = PF, PAc = PA, YdsFc = YdsF, YdsAc = YdsA, TOFc = TOF, TOAc = TOA, W:T) %>%
-#   ungroup() %>%
-#   mutate(Pct = case_when(Season < 1972 ~ W / (W + L),
-#                          TRUE ~ ((W + 1/2 * T) / (W + L + T))) %>% round(3),
-#          WLT = case_when(T == 0 ~ paste0("(", W, "-", L, ")"),
-#                          TRUE ~ paste0("(", W, "-", L, "-", T, ")"))) %>% 
-#   left_join(teaminfo, by = c("Season", "Team")) %>% # add remaining Infos
-#   select(Season:Team, Franchise:Division, Result:WLT) %>% 
-#   arrange(Season, Week, -Pct, -PFc, PAc)
 
 standings <- results |>
   mutate(Team = map_chr(Team_data, ~.$Team),
