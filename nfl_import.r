@@ -68,7 +68,7 @@ import <- function(df) {
                                       skip = 1,
                                       col_names = c("Week", "Day", "Date", "Time", "Winner/tie", "Matchup", "Loser/tie",
                                                     "PreBox", "PtsW", "PtsL", "YdsW", "TOW", "YdsL", "TOL"),
-                                      col_types = "ccciiiiii", # c .. character, i .. integer
+                                      col_types = "cccccccciiiiii", # c .. character, i .. integer
                                       comment = "#",
                                       progress = FALSE,
                                       lazy = FALSE)))
@@ -76,14 +76,14 @@ import <- function(df) {
 
 ## Erstmalige Initialisierung ----
 if(!exists("data_raw")) {
-  data_raw <- tibble(filename = dir("games/nfl/")) |>
-    mutate(chk = tools::md5sum(paste0("games/nfl/", filename))) |>
+  data_raw <- tibble(filename = dir("games/")) |>
+    mutate(chk = tools::md5sum(paste0("games/", filename))) |>
     import()
 }
 
 ## Suchen möglicherweise veränderter Dateien anhand 'chk' ----
-tmp <- tibble(filename = dir("games/nfl/")) |>
-  mutate(chk = tools::md5sum(paste0("games/nfl/", filename))) |>
+tmp <- tibble(filename = dir("games/")) |>
+  mutate(chk = tools::md5sum(paste0("games/", filename))) |>
   anti_join(data_raw, by = c("filename", "chk")) |>
   import()
 
@@ -278,4 +278,5 @@ matchups <- function (a, b, starting = 1970) {
              TRUE ~ paste0("(", W, "-", L, "-", T, ")"))) %>% 
     arrange(desc(Situation)) %>% 
     print()
+
 }
