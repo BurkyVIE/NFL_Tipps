@@ -90,14 +90,15 @@ tribble(~ID, ~Qtr, ~Time, ~Rams_Score, ~Pts,
 reduce(list(
   group_by(scoredetail, Season, Week, Location, Opponent) |> filter(Rams_Score) |> summarise(Pts_Rams = sum(Pts), .groups = "drop"),
   group_by(scoredetail, Season, Week, Location, Opponent) |> filter(!Rams_Score) |> summarise(Pts_Opp = sum(Pts), .groups = "drop"),
-  group_by(scoredetail, Season, Week, Location, Opponent) |> summarise(OT = max(Qtr) > 4, .groups = "drop")),
+  group_by(scoredetail, Season, Week, Location, Opponent) |> summarise(OT = max(Qtr) > 4, .groups = "drop"),
+  group_by(scoredetail, Season, Week, Location, Opponent) |> summarise(Final = max(3600, max(Time)), .groups = "drop")),
   left_join, by = c("Season", "Week", "Location", "Opponent")
 ) |> 
   replace_na(list(Pts_Rams = 0, Pts_Opp = 0)) |> 
   mutate(Res = case_when(Pts_Rams > Pts_Opp ~ "W", Pts_Rams < Pts_Opp ~ "L", TRUE ~ "T"),
-         OT = ifelse(Res == "T", TRUE, OT)) |> 
+         OT = ifelse(Res == "T", TRUE, OT),
+         Final = case_when(Res == "T" & Season <= 2026 ~ 4500, Res == "T" & Season > 2026 ~ 4200, TRUE ~ Final)) |> 
   tail()
-
 # Grafik ----
 scoredetail |>
   filter(Week < 30, Season %in% 2000:2003) |>
