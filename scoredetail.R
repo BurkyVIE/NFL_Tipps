@@ -75,7 +75,44 @@ tribble(~ID, ~Qtr, ~Time, ~Rams_Score, ~Pts,
         '2002.17.30122002.Home.49ers', c(1,2,2,3,4,4,4,4,4), c(2.53,10.34,3.2,1.47,13.43,11.32,7.9,6.54,1.53), c(F,F,F,T,F,T,T,T,T), c(3,7,7,3,3,7,7,7,7),
         '2003.1.07092003.Away.Giants', c(1,1,2,2,3,3,3,4), c(5.2,2.10,9.57,3.18,8.45,5.3,2.43,14.3), c(T,F,F,T,F,F,F,T), c(3,7,3,3,3,7,3,7),
         '2003.2.14092003.Home.49ers', c(1,1,2,3,3,4,4,4,5), c(11.44,6.16,8.45,6.39,1.15,13.15,3.20,0.19,13.0), c(F,T,F,T,F,T,T,F,T), c(7,7,3,7,7,7,3,7,3),
-        '2003.3.21092003.Away.Seahawks', c(1,1,2,2,2,3,3,4,4), c(11.59,3.29,9.10,2.21,0.12,10.48,3.52,14.10,1.0), c(F,T,T,T,F,T,T,F,F), c(7,7,7,3,3,3,3,7,7)
+        '2003.3.21092003.Away.Seahawks', c(1,1,2,2,2,3,3,4,4), c(11.59,3.29,9.10,2.21,0.12,10.48,3.52,14.10,1.0), c(F,T,T,T,F,T,T,F,F), c(7,7,7,3,3,3,3,7,7),
+        '2003.4.28092003.Home.Cardinals', c(1,1,2,2,2,3,3,4,4), c(9.31,0.39,7.45,0.36,0.0,7.17,7.3,13.11,4.6), c(T,T,T,F,T,T,F,T,T), c(7,7,3,7,3,3,6,7,7),
+        '2003.6.13102003.Home.Falcons', c(1,2,3,3,4,4,4), c(1.17,1.22,12.16,2.15,10.44,3.45,1.33), c(T,T,T,T,T,T,T), c(3,7,7,2,7,3,7),
+        '2003.7.19102003.Home.Packers', c(1,1,1,2,2,3,3,4,4,4), c(10.8,7.24,3.47,13.23,0.57,11.56,4.11,4.52,2.56,1.48), c(F,T,T,F,T,F,T,T,T,F), c(3,7,7,7,7,7,7,3,3,7),
+        '2003.8.26102003.Away.Steelers', c(1,1,2,2,2,3,3,3,4), c(10.23,0.43,7.58,4.55,0.52,9.13,6.51,2.31,7.54), c(T,F,T,F,T,T,F,T,T), c(7,7,7,7,3,3,7,7,6),
+        '2003.9.02112003.Away.49ers', c(1,1,1,2,2,3,4), c(14.48,10.37,6.20,9.24,4.15,12.54,13.10), c(F,T,F,F,F,F,T), c(7,3,7,3,7,6,7),
+        '2003.10.09112003.Home.Ravens', c(1,1,1,2,2,2,2,3,4,4,4,4), c(11.12,9.28,5.23,10.11,6.43,4.44,1.19,10.22,14.52,9.8,5.25,1.41), c(T,T,F,F,F,T,F,F,T,T,T,T), c(7,7,3,3,6,7,7,3,3,3,3,3),
+        '2003.11.16112003.Away.Bears', c(1,2,2,3,4,4,4,4), c(1.14,10.25,3.4,3.48,12.46,7.21,5.58,0.38), c(T,F,F,T,T,T,F,T), c(3,7,7,7,7,3,7,3),
+        '2003.12.23112003.Away.Cardinals', c(1,1,2,2,2,3,3,4,4,4,5), c(9.15,3.35,5.33,1.50,0.0,10.43,0.0,11.59,6.5,0.0,10.22), c(T,T,F,F,T,T,F,F,F,T,T), c(7,7,3,7,3,7,7,7,3,3,3),
+        '2003.13.30112006.Home.Vikings', c(1,1,1,2,2,2,2,3,3,4,4), c(13.21,5.40,0.56,11.50,5.43,0.51,0.0,4.50,2.39,12.6,6.48), c(T,T,F,T,F,F,T,T,T,T,T), c(7,3,7,7,3,7,3,7,7,7,7),
+        '2003.14.08122003.Away.Browns', c(1,1,2,2,2,2,3,3,4), c(7.18,4.13,8.1,1.52,1.4,0.22,10.31,3.53,10.17), c(T,F,T,T,T,T,F,T,F), c(3,7,3,3,7,7,6,3,7),
+        '2003.15.14122003.Home.Seahawks', c(1,1,1,2,2,2,3,4,4,4), c(11.37,3.5,1.10,7.53,5.6,0.18,5.39,14.18,10.18,1.37), c(F,T,T,F,T,F,F,T,F,T), c(2,7,7,7,7,3,3,3,7,3),
+        '2003.16.21122003.Home.Bengals', c(1,2,2,2,2,3,4), c(1.59,8.40,4.39,0.47,0.0,3.25,14.8), c(T,F,T,T,F,T,T), c(7,7,3,7,3,3,7),
+        '2003.17.28122003.Away.Lions', c(1,2,2,2,2,2,3,3,3,4), c(2.59,14.52,11.50,6.6,3.37,0.23,11.43,5.30,2.56,14.29), c(F,T,F,T,T,T,F,F,F,F), c(3,7,7,3,7,3,7,7,3,3),
+        '2003.31.10012004.Home.Panthers', c(1,2,2,2,2,3,3,3,4,4,4,6), c(5.34,13.26,11.22,6.58,1.7,11.25,7.45,0.43,8.50,2.39,0.0,14.50), c(T,T,F,T,F,T,F,F,F,T,T,F), c(3,3,7,3,3,3,3,3,7,8,3,6),
+        '2004.1.12092004.Home.Cardinals', c(2,2,2,3,3,4), c(11.21,8.10,2.39,5.50,0.57,14.27), c(T,F,T,T,F,T), c(3,3,3,3,7,8),
+        '2004.2.19092004.Away.Falcons', c(1,2,2,2,3,3,4,4,4), c(5.28,9.42,1.12,0.2,8.58,2.41,12.36,11.48,4.41), c(F,F,T,F,T,T,F,F,F), c(7,7,7,3,7,3,7,7,3),
+        '2004.3.26092004.Home.Saints', c(1,2,2,2,2,3,4,4,4,4,5), c(7.58,14.50,11.8,7.46,1.1,5.16,13.34,8.23,0.28,0.3,7.56), c(T,F,T,F,F,F,T,F,T,F,F), c(7,3,3,7,3,3,7,6,8,3,3),
+        '2004.4.03102004.Away.49ers', c(1,1,2,2,4,4), c(1.51,1.13,7.32,0.29,13.33,0.16), c(T,T,T,T,F,F), c(7,7,3,7,6,8),
+        '2004.5.10102004.Away.Seahawks', c(1,2,2,2,2,3,4,4,4,4,5), c(9.52,14.17,11.29,8.54,0.50,0.56,8.42,5.34,3.30,0.8,11.58), c(F,F,T,F,F,T,F,T,T,T,T), c(7,3,7,7,7,3,3,7,7,3,6),
+        '2004.6.18102004.Home.Buccaneers', c(1,1,2,2,3,3,4), c(12.40,9.14,13.2,1.42,7.24,0.37,10.46), c(T,F,F,T,T,F,T), c(7,7,7,7,7,7,7),
+        '2004.7.24102004.Away.Dolphins', c(1,2,2,4,4,4,4), c(7.29,5.19,0.22,14.21,8.47,4.51,4.24), c(F,T,F,F,F,T,F), c(7,7,7,7,3,7,7),
+        '2004.9.07112004.Home.Patriots', c(1,1,2,2,2,2,2,3,3,4,4), c(11.25,5.42,14.46,9.4,5.19,3.3,0.0,7.15,3.36,14.13,5.23), c(F,F,T,F,T,F,F,F,F,T,F), c(3,3,7,7,7,3,3,7,7,8,7),
+        '2004.10.14112004.Home.Seahawks', c(1,1,2,2,2,3,3,3,4), c(12.23,6.51,12.18,6.50,5.3,9.32,5.54,3.54,0.26), c(T,T,T,F,F,T,F,F,T), c(7,7,3,3,3,3,3,3,3),
+        '2004.11.21112004.Away.Bills', c(1,1,2,2,2,2,3,3,3,3), c(4.50,2.48,13.56,11.1,3.5,0.34,13.43,11.12,8.3,1.25), c(T,T,F,F,T,F,F,F,F,F), c(3,7,7,7,7,3,7,7,3,3),
+        '2004.12.29112004.Away.Packers', c(1,2,2,2,2,3,4,4,4,4), c(12.23,12.47,7.25,2.50,0.30,1.44,14.19,8.29,1.52,0.46), c(F,T,F,F,T,F,T,F,F,F), c(7,3,7,7,7,7,7,3,7,7),
+        '2004.13.05122004.Home.49ers', c(1,1,2,2,3,4), c(4.43,2.23,9.29,0.45,7.55,6.44), c(T,F,T,T,F,T), c(3,3,7,3,3,3),
+        '2004.14.12122004.Away.Panthers', c(1,1,1,2,2), c(7.13,1.4,0.6,6.12,0.39), c(F,F,T,F,F), c(7,7,7,3,3),
+        '2004.15.19122004.Away.Cardinals', c(1,1,2,2,3,4), c(5.24,1.44,12.24,0.7,7.2,10.54), c(F,F,F,T,F,F), c(7,3,7,7,7,7),
+        '2004.16.27122004.Home.Eagles', c(1,1,2,3,4), c(9.3,1.38,0.42,7.38,5.24), c(T,F,T,T,T), c(7,7,3,7,3),
+        '2004.17.02012005.Home.Jets', c(1,2,2,2,3,3,3,3,4,4,5), c(1.13,7.54,4.14,1.0,13.30,13.19,9.56,1.12,5.6,0.3,3.2), c(F,T,F,T,T,F,F,F,T,F,T), c(3,7,7,7,7,7,3,6,8,3,3),
+        '2004.31.08012005.Away.Seahawks', c(1,1,2,2,3,3,4,4,4), c(11.33,2.5,13.32,8.18,8.52,2.35,13.43,8.7,2.11), c(T,F,T,F,F,T,F,T,T), c(7,3,7,7,3,3,7,3,7),
+        '2004.32.15012005.Away.Falcons', c(1,1,1,2,2,2,2,3,3,4,4), c(12.0,9.14,7.52,9.58,5.26,0.59,0.0,10.5,5.54,11.39,1.54), c(F,T,F,F,T,F,T,F,F,F,F), c(7,7,7,7,7,7,3,7,3,2,7),
+        '2005.1.11092005.Away.49ers', c(1,2,2,2,2,2,3,3,4,4), c(4.28,13.7,9.45,6.48,1.16,0.0,11.32,1.52,13.22,2.13), c(T,T,F,F,F,T,F,T,T,T), c(3,3,7,7,7,3,7,3,6,7),
+        '2005.2.18092005.Away.Cardinals', c(1,1,2,2,3,3,4), c(11.42,5.38,8.44,3.42,10.23,5.45,6.59), c(T,F,F,T,F,T,F), c(7,3,3,3,3,7,3),
+        '2005.3.25092005.Home.Titans', c(1,1,2,2,2,3,3,3,4,4), c(6.21,4.1,12.28,7.55,2.8,9.30,3.22,2.37,14.54,6.2), c(F,F,T,T,T,T,F,F,T,F), c(7,3,7,3,7,7,7,7,7,3),
+        '2005.4.02102005.Away.Giants', c(1,1,1,1,2,2,2,2,3,4,4,4), c(12.51,8.39,5.3,2.50,12.12,9.25,4.5,1.47,5.19,8.27,5.28,1.52), c(F,F,T,F,F,F,T,T,F,F,T,F), c(7,3,7,7,7,3,7,3,7,3,7,7),
+        '2005.5.09102005.Home.Seahawks', c(1,1,1,2,2,2,2,3,3,3,4,4), c(14.46,9.34,1.37,13.49,9.5,2.2,0.0,9.23,6.15,0.26,7.32,3.54), c(T,F,F,T,F,T,F,F,F,T,F,T), c(7,7,7,7,7,7,3,3,7,7,3,3)
 ) |> 
   separate(ID, sep = "\\.", into = c("Season", "Week", "Date", "Location", "Opponent"), convert = TRUE) |> 
   unnest(cols = c(Qtr, Time, Rams_Score, Pts)) |> 
@@ -83,104 +120,145 @@ tribble(~ID, ~Qtr, ~Time, ~Rams_Score, ~Pts,
          across(c(Qtr, Pts), ~ as.integer(.x)),
          Dur_Q = c(rep(900, 4), rep(ifelse(Season <= 2016 & Week < 30, 900, 600), 3))[Qtr],
          Dur_T = c(0, 900, 1800, 2700, 3600, ifelse(Season <= 2016 & Week < 30, c(4500, 5400), c(4200, 4800)))[Qtr]) |> 
-  mutate(Time = Dur_Q - (trunc(Time) * 60 + Time %% 1) + Dur_T,
+  mutate(Time = Dur_Q - (trunc(Time) * 60 + Time %% 1 * 100) + Dur_T,
          .keep = "unused") -> scoredetail
 
-# Kontrolle ----
-reduce(list(
-  group_by(scoredetail, Season, Week, Location, Opponent) |> filter(Rams_Score) |> summarise(Pts_Rams = sum(Pts), .groups = "drop"),
-  group_by(scoredetail, Season, Week, Location, Opponent) |> filter(!Rams_Score) |> summarise(Pts_Opp = sum(Pts), .groups = "drop"),
-  group_by(scoredetail, Season, Week, Location, Opponent) |> summarise(OT = max(Qtr) > 4, .groups = "drop"),
-  group_by(scoredetail, Season, Week, Location, Opponent) |> summarise(Final = max(3600, max(Time)), .groups = "drop")),
-  left_join, by = c("Season", "Week", "Location", "Opponent")
-) |> 
-  replace_na(list(Pts_Rams = 0, Pts_Opp = 0)) |> 
-  mutate(Res = case_when(Pts_Rams > Pts_Opp ~ "W", Pts_Rams < Pts_Opp ~ "L", TRUE ~ "T"),
-         OT = ifelse(Res == "T", TRUE, OT),
-         Final = case_when(Res == "T" & Season <= 2026 ~ 4500, Res == "T" & Season > 2026 ~ 4200, TRUE ~ Final)) |> 
+# Zusammenfassung ----
+scoredetail |> 
+  group_by(Season, Week, Location, Opponent) |> 
+  summarise(
+    Pts_Rams = sum(Pts[Rams_Score], na.rm = TRUE),
+    Pts_Opp  = sum(Pts[!Rams_Score], na.rm = TRUE),
+    OT       = max(Qtr) > 4,
+    # Letzter Score oder mindestens 3600 Sekunden (End Regulation)
+    Final_Score_Time = max(3600, max(Time, na.rm = TRUE)),
+    .groups  = "drop"
+  ) |> 
+  mutate(
+    Res   = case_when(Pts_Rams > Pts_Opp ~ "W", Pts_Rams < Pts_Opp ~ "L", TRUE ~ "T"),
+    OT    = if_else(Res == "T", TRUE, OT),
+    # Bei Tie volle OT-Dauer ansetzen, sonst Zeit des letzten Scores/Reg
+    Final = case_when(
+      Res == "T" & Season <= 2016 ~ 4500,
+      Res == "T" & Season > 2016  ~ 4200,
+      TRUE                        ~ Final_Score_Time
+    )
+  )|> 
+  select(-Final_Score_Time) |>
   tail()
+
 # Grafik ----
 scoredetail |>
-  filter(Week < 30, Season %in% 2000:2003) |>
+  # 1. Regular Season filtern
+  filter(Week < 30, Season %in% 2000:2005) |>
+  
+  # 2. Spiel-Ebene: Final-Zeitpunkte berechnen
+  group_by(Season, Week, Location, Opponent) |>
   mutate(
-    Location = paste(Location, "Game"),
-    PF_Rams = if_else(Rams_Score, Pts, -Pts)
-  ) |> 
-  group_by(Season) |> 
-  mutate(n_games = n_distinct(Week, na.rm = TRUE)) |>
-  group_modify(~ add_row(.x, Time = c(0, max(3600, max(.x$Time, na.rm = TRUE))), PF_Rams = c(0, 0))) |> 
-  arrange(Time, .by_group = TRUE)  |>
-  mutate(
-    n_games = first(na.omit(n_games)),
-    NetPts  = cumsum(PF_Rams) / n_games
+    Pts_Rams   = sum(Pts[Rams_Score], na.rm = TRUE),
+    Pts_Opp    = sum(Pts[!Rams_Score], na.rm = TRUE),
+    Last_Score = max(Time, na.rm = TRUE),
+    Is_Tie     = (Pts_Rams == Pts_Opp),
+    
+    Game_Final = case_when(
+      Is_Tie & Season <= 2016 ~ 4500,
+      Is_Tie & Season > 2016  ~ 4200,
+      TRUE                    ~ pmax(3600, Last_Score)
+    )
   ) |>
-  distinct(Time, .keep_all = TRUE) |> 
-  mutate(Time_next = lead(Time, default = max(3600, max(Time)))) |>
+  
+  # 3. Saison-Ebene: Net Points & Endzeit ermitteln
+  group_by(Season) |>
+  mutate(
+    PF_Rams      = if_else(Rams_Score, Pts, -Pts),
+    n_games      = n_distinct(Week),
+    Season_Final = max(Game_Final)
+  ) |>
+  
+  # 4. Aggregation: Net Points pro Zeitpunkt
+  group_by(Season, Time) |>
+  summarise(
+    NetPts       = sum(PF_Rams) / first(n_games),
+    Season_Final = first(Season_Final),
+    .groups      = "drop_last"
+  ) |>
+  arrange(Time) |>
+  mutate(NetPts = cumsum(NetPts)) |>
+  
+  # 5. Ränder (0 und Season_Final) verankern
+  group_modify(~ {
+    s_final <- first(.x$Season_Final)
+    
+    if (! 0 %in% .x$Time) {
+      .x <- add_row(.x, Time = 0, NetPts = 0, Season_Final = s_final, .before = 1)
+    }
+    
+    last_pts <- tail(.x$NetPts, 1)
+    if (! s_final %in% .x$Time) {
+      .x <- add_row(.x, Time = s_final, NetPts = last_pts, Season_Final = s_final)
+    }
+    
+    .x
+  }) |>
+  
+  # 6. Punkte für hv-Stufen verdoppeln
+  group_modify(~ {
+    tibble(
+      Time         = c(.x$Time[1], rep(.x$Time[-1], each = 2)),
+      NetPts       = c(rep(.x$NetPts[-nrow(.x)], each = 2), .x$NetPts[nrow(.x)]),
+      Season_Final = first(.x$Season_Final)
+    )
+  }) |>
   ungroup() |>
-  ggplot() +
-  # # OT-Hintergrund schattieren (3600 bis 4200 Sek.)
-  # annotate(
-  #   "rect", 
-  #   xmin = 3600, xmax = 4200, 
-  #   ymin = -Inf, ymax = Inf, 
-  #   fill = "gray92", alpha = 0.5
-  # ) +
- 
-   # Positive Fläche (grün)
+  
+  # 7. Plot-Erstellung
+  ggplot(aes(x = Time, y = NetPts)) +
+  # OT-Hintergrund
   geom_rect(
-    aes(
-      xmin = Time, xmax = Time_next,
-      ymin = 0, ymax = pmax(0, NetPts)
-    ),
-    fill = "forestgreen", alpha = 0.25
+    data = function(d) {
+      d |> 
+        group_by(Season) |> 
+        summarise(max_t = max(Season_Final), .groups = "drop") |> 
+        filter(max_t > 3600)
+    },
+    aes(xmin = 3600, xmax = max_t, ymin = -Inf, ymax = Inf),
+    fill = "gray92", 
+    inherit.aes = FALSE
   ) +
-  # Negative Fläche (rot)
-  geom_rect(
-    aes(
-      xmin = Time, xmax = Time_next,
-      ymin = pmin(0, NetPts), ymax = 0
-    ),
-    fill = "firebrick", alpha = 0.25
-  ) +
+  
+  # Stufenflächen
+  geom_ribbon(aes(ymin = 0, ymax = pmax(0, NetPts)), fill = "forestgreen", alpha = 0.25) +
+  geom_ribbon(aes(ymin = pmin(0, NetPts), ymax = 0), fill = "firebrick", alpha = 0.25) +
   
   # Referenzlinien
   geom_hline(yintercept = 0, color = "gray40", linewidth = 0.6) +
-  geom_vline(
-    xintercept = c(900, 1800, 2700, 3600), 
-    linetype = "dotted", 
-    color = "gray50", 
-    linewidth = 0.6
-  ) +
+  geom_vline(xintercept = c(900, 1800, 2700, 3600), linetype = "dotted", color = "gray50") +
   
-  # Stufenlinie
-  geom_step(aes(x = Time, y = NetPts), linewidth = 1.1, color = "black") +
+  # Durchgehende schwarze Stufenlinie
+  geom_line(linewidth = 1.1, color = "black") +
   
-  # Faceting mit variablen Y-Achsen
-  facet_wrap(~Season, nrow = 3) + #, scales = "free_y"
+  # Faceting
+  facet_wrap(~Season, nrow = 3) +
   
-  # X-Achse
+  # Achsenbeschriftung
   scale_x_continuous(
     name = "Game Time",
     breaks = c(0, 900, 1800, 2700, 3600),
-    labels = c("KO", "Q1", "HT", "Q3", "EoR"),
-    expand = expansion(mult = c(0.005, 0.01))
+    labels = c("KO", "Q1", "HT", "Q3", "EoR")
   ) +
-  coord_cartesian(xlim = c(0, NA)) +
   
-  # Y-Achse
+  # Y-Achse in 7er-Schritten
   scale_y_continuous(
     name = "Avg Net Points per Game",
-    breaks = scales::breaks_width(7), 
-    minor_breaks = NULL
+    breaks = seq(-21, 21, by = 7)
   ) +
   
   labs(
     title = "Rams: Average Regular Season Game Net Points",
-    subtitle = "Grün = Vorsprung | Rot = Rückstand"
+    subtitle = "Green = Point Lead | Red = Point Deficit | Gray = Overtime"
   ) +
   theme_minimal() +
   theme(
-    strip.text = element_text(face = "bold", size = 11),
+    strip.text       = element_text(face = "bold", size = 10, color = "black"),
     panel.grid.minor = element_blank()
   )
-
