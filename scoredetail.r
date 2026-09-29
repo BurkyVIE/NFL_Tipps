@@ -270,14 +270,11 @@ scoredetail |>
   select(-Final_Score_Time)  -> he
   anti_join(results |>
               filter(Franchise == "Rams", Season >= 1999) |> 
-              select(Season, Week, Date, PF, PA, Road),
+              select(Season, Week, Date, PF, PA, Road, Opp_Fr),
             he |> 
-              mutate(Road = case_when(Week == 35 ~ NA, TRUE ~ Location == "Away")),
-            by = c("Season", "Week", "Date", "Road", "PF" = "Pts_Rams", "PA" = "Pts_Opp"))
-  # right_join(he, select(filter(results, Franchise == "Rams", Season >= 1999), Season, Week, Date, PF, PA, Road), by = c("Season", "Week")) |> 
-  # mutate(Match = Date.x == Date.y & Pts_Rams == PF & Pts_Opp == PA & Location %in% c("Home", "Away") & ifelse(Location == "Away", T, F) == Road) |> 
-  # filter(!Match)
-rm(he)
+              mutate(Opponent = case_when(Season < 2022 & Opponent == "Redskins" ~ "Commanders", TRUE ~ Opponent),
+                     Road = case_when(Week == 35 ~ NA, TRUE ~ Location == "Away")),
+            by = c("Season", "Week", "Date", "Opp_Fr" = "Opponent", "Road", "PF" = "Pts_Rams", "PA" = "Pts_Opp")); rm(he)
   
 # Grafik ----
 scoredetail |>
