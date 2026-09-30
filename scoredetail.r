@@ -379,7 +379,7 @@ scoredetail |>
 # Grafik ----
 scoredetail |>
   # 1. Regular Season filtern
-  filter(Week < 30, Season %in% 2002:2016) |>
+  filter(Week < 30, Season %in% 2004:2018) |>
   
   # 2. Spiel-Ebene: Final-Zeitpunkte berechnen
   group_by(Season, Week, Location, Opponent) |>
