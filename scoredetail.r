@@ -482,6 +482,8 @@ tribble(~ID, ~Qtr, ~Time, ~Rams_Score, ~Pts,
 scoredetail |> 
   group_by(Season, Week, Date, Location, Opponent) |> 
   summarise(
+    Pts_Rams_HT = sum(Pts[Rams_Score & Qtr <= 2], na.rm = TRUE),
+    Pts_Opp_HT  = sum(Pts[!Rams_Score & Qtr <= 2], na.rm = TRUE),
     Pts_Rams = sum(Pts[Rams_Score], na.rm = TRUE),
     Pts_Opp  = sum(Pts[!Rams_Score], na.rm = TRUE),
     OT       = max(Qtr) > 4,
@@ -490,25 +492,36 @@ scoredetail |>
     .groups  = "drop"
   ) |> 
   mutate(
-    Res   = case_when(Pts_Rams > Pts_Opp ~ "W", Pts_Rams < Pts_Opp ~ "L", TRUE ~ "T"),
+    Res_HT = case_when(Pts_Rams_HT > Pts_Opp_HT ~ "W", Pts_Rams_HT < Pts_Opp_HT ~ "L", TRUE ~ "T"),
+    Res    = case_when(Pts_Rams > Pts_Opp ~ "W", Pts_Rams < Pts_Opp ~ "L", TRUE ~ "T"),
+    # Klassifikation des Spielverlaufs (NFL Terms)
+    Game_Outcome = case_when(
+      Res_HT == "W" & Res == "W" ~ "Wire-to-Wire Win",
+      Res_HT == "L" & Res == "W" ~ "Halftime Comeback Win",
+      Res_HT == "T" & Res == "W" ~ "Halftime Tie, Win",
+      Res_HT == "W" & Res == "L" ~ "Blown Lead Loss",
+      Res_HT == "L" & Res == "L" ~ "Wire-to-Wire Loss",
+      Res_HT == "T" & Res == "L" ~ "Halftime Tie, Loss",
+      Res_HT == "T" & Res == "T" ~ "Halftime Tie, Tie Game",
+      TRUE                       ~ "Other Tie Scenario"
+    ),
     OT    = if_else(Res == "T", TRUE, OT),
-    # Bei Tie volle OT-Dauer ansetzen, sonst Zeit des letzten Scores/Reg
     Final = case_when(
       Res == "T" & Season <= 2016 ~ 4500,
       Res == "T" & Season > 2016  ~ 4200,
       TRUE                        ~ Final_Score_Time
     )
-  )|> 
-  select(-Final_Score_Time)  -> he
+  ) |> 
+  select(-Final_Score_Time)  -> rams_games_summary
   anti_join(results |>
               filter(Franchise == "Rams", Season >= 1999) |> 
               select(Season, Week, Date, PF, PA, Road, Opp_Fr),
-            he |> 
+            rams_games_summary |> 
               mutate(Opponent = case_when(Season < 2022 & Opponent %in% c("Redskins", "Football Team") ~ "Commanders", TRUE ~ Opponent),
                      Road = case_when(Week == 35 ~ NA, TRUE ~ Location == "Away")),
-            by = c("Season", "Week", "Date", "Opp_Fr" = "Opponent", "Road", "PF" = "Pts_Rams", "PA" = "Pts_Opp")); rm(he)
+            by = c("Season", "Week", "Date", "Opp_Fr" = "Opponent", "Road", "PF" = "Pts_Rams", "PA" = "Pts_Opp"))
   
-# Grafik ----
+# Grafik 1 ----
 scoredetail |>
   # 1. Regular Season filtern
   filter(Week < 30, Season %in% 2012:2026) |>
@@ -623,3 +636,58 @@ scoredetail |>
     strip.text       = element_text(face = "bold", size = 10, color = "black"),
     panel.grid.minor = element_blank()
   )
+
+# Grafik 2 ----
+rams_games_summary |> 
+    mutate(
+      Net_HT    = Pts_Rams_HT - Pts_Opp_HT,
+      Net_Final = Pts_Rams - Pts_Opp,
+      # Reihenfolge in den Levels exakt an die Wins anpassen
+      Game_Outcome = factor(
+        Game_Outcome,
+        levels = c(
+          "Wire-to-Wire Win",
+          "Halftime Comeback Win",
+          "Halftime Tie, Win",
+          "Wire-to-Wire Loss",
+          "Blown Lead Loss",
+          "Halftime Tie, Loss",
+          "Halftime Tie, Tie Game",
+          "Other Tie Scenario"
+        )
+      )
+    ) |> 
+    ggplot(aes(x = Net_HT, y = Net_Final, color = Game_Outcome)) +
+    geom_hline(yintercept = 0, linetype = "dashed", color = "gray60") +
+    geom_vline(xintercept = 0, linetype = "dashed", color = "gray60") +
+    geom_point(size = 3.5, alpha = 0.85) +
+    scale_color_manual(
+      values = c(
+        # Wins (Dunkelgrün -> Mittelgrün -> Hellgrün)
+        "Wire-to-Wire Win"       = "#1b7837",
+        "Halftime Comeback Win"  = "#7fbf7b",
+        "Halftime Tie, Win"      = "#d9f0d3",
+        
+        # Losses (Dunkelrot -> Mittelrot -> Hellrot/Orange)
+        "Wire-to-Wire Loss"      = "#b2182b",
+        "Blown Lead Loss"        = "#d6604d",
+        "Halftime Tie, Loss"     = "#f4a582",
+        
+        # Ties (Dunkelgrau -> Hellgrau)
+        "Halftime Tie, Tie Game" = "#808080",
+        "Other Tie Scenario"     = "#d9d9d9"
+      ),
+      limits = force,
+      drop   = FALSE,
+      name   = "Game Outcome"
+    ) +
+    labs(
+      title = "Rams Net Points: Halftime vs. Final",
+      x = "Halftime Net Points",
+      y = "Final Net Points"
+    ) +
+    theme_minimal(base_size = 12) +
+    theme(
+      plot.title = element_text(face = "bold"),
+      legend.position = "right"
+    )
